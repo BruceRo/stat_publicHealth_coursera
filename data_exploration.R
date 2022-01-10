@@ -31,3 +31,17 @@ ggplot(df) +
 # bmi distribution seems more normal females
 hist(df$bmi[df$gender == 0], main = "bmi for Females", xlab = "bmi")
 hist(df$bmi[df$gender == 1], main = "bmi for Males", xlab = "bmi")
+
+
+# add fruitveg column
+df <- df %>% mutate(fruitveg = fruit + veg)
+df <- df %>% mutate(five_a_day = if_else(fruitveg >=5, 1, 0))
+
+summary(df$fruitveg)
+
+mean(df$five_a_day)
+
+# dichotomise BMI into normal and not normal
+df <- df %>% mutate(normal_bmi = if_else(bmi >= 18.5 & bmi < 25, "normal", "not normal" ))
+
+table(df$normal_bmi)
